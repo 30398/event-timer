@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet.jsx";
+} from "@/src//components/ui/sheet";
 
 const NOTIFICATION_TIMES = [180, 120, 60, 30, 15, 0];
 const ADMIN_PASSWORD = '136580';
