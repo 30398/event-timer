@@ -11,17 +11,16 @@ import {
 
 const NOTIFICATION_TIMES = [180, 120, 60, 30, 15, 0];
 const ADMIN_PASSWORD = '136580';
-const ADMIN_KEYS = ['Control', 'Alt', 'M']; // Yeni kısayol kombinasyonu
+const ADMIN_KEYS = ['Control', 'Alt', 'M'];
 
 const EventTimer = () => {
   const [referenceTime, setReferenceTime] = useState(() => {
-    // Tarayıcıda localStorage'tan veri al, yoksa varsayılan değer kullan
     const saved = typeof window !== "undefined" ? localStorage.getItem('referenceTime') : null;
     if (saved) {
       return new Date(saved);
     }
     const initialTime = new Date();
-    initialTime.setHours(16, 15, 30); // Varsayılan başlangıç saati
+    initialTime.setHours(16, 15, 30);
     return initialTime;
   });
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -34,23 +33,15 @@ const EventTimer = () => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
   const audioRef = useRef(null);
 
-  const EVENT_DURATION = 21 * 60 * 1000; // 21 dakika
+  const EVENT_DURATION = 21 * 60 * 1000;
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       const newPressedKeys = new Set([...pressedKeys, e.key]);
       setPressedKeys(newPressedKeys);
 
-      // Ctrl+Alt+M kontrolü
-      if (ADMIN_KEYS.every(key => {
-        const keyMap = {
-          'Control': 'Control',
-          'Alt': 'Alt',
-          'M': 'm'
-        };
-        return newPressedKeys.has(keyMap[key] || key);
-      })) {
-        e.preventDefault(); // Tarayıcı varsayılan davranışını engelle
+      if (ADMIN_KEYS.every(key => newPressedKeys.has(key))) {
+        e.preventDefault();
         setShowAdminLogin(prev => !prev);
         setPressedKeys(new Set());
       }
@@ -85,7 +76,6 @@ const EventTimer = () => {
 
   useEffect(() => {
     if (referenceTime) {
-      // referenceTime'ı localStorage'a kaydet
       if (typeof window !== "undefined") {
         localStorage.setItem('referenceTime', referenceTime.toISOString());
       }
@@ -156,11 +146,11 @@ const EventTimer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-8 flex flex-col items-center justify-center">
-      <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-700/30">
+    <div className="min-h-screen bg-gradient-to-b from-blue-800 to-blue-600 text-white p-8 flex flex-col items-center justify-center">
+      <div className="bg-white/20 backdrop-blur-lg p-8 rounded-3xl shadow-xl w-full max-w-md border border-blue-500/30">
         <div className="text-center space-y-8">
           <div className="space-y-2">
-            <div className="text-3xl font-light text-gray-400 mb-1">
+            <div className="text-3xl font-light text-gray-300 mb-1">
               ⟨ Next Session ⟩
             </div>
             <div className="text-7xl font-bold tracking-wider text-white mb-2 font-mono">
@@ -174,7 +164,7 @@ const EventTimer = () => {
           {!notificationsEnabled && (
             <div className="space-y-4">
               {showNotificationHint && (
-                <div className="bg-blue-500/20 p-4 rounded-lg flex items-center gap-3 text-blue-200">
+                <div className="bg-yellow-500/20 p-4 rounded-lg flex items-center gap-3 text-yellow-200">
                   <AlertCircle className="w-5 h-5 flex-shrink-0" />
                   <p className="text-sm">
                     Enable notifications to receive alerts before each session
@@ -214,7 +204,7 @@ const EventTimer = () => {
               <SheetTitle>Settings</SheetTitle>
             </SheetHeader>
             <div className="py-4">
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 text-gray-200">
                 Reference Time
               </label>
               <input
