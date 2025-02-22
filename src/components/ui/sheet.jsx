@@ -1,25 +1,25 @@
 "use client"
 
 import * as React from "react"
-import * as SheetPrimitive from "@radix-ui/react-sheet"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
 
-const Sheet = SheetPrimitive.Root
-const SheetTrigger = SheetPrimitive.Trigger
-const SheetClose = SheetPrimitive.Close
-const SheetPortal = SheetPrimitive.Portal
+const Sheet = DialogPrimitive.Root
+const SheetTrigger = DialogPrimitive.Trigger
+const SheetClose = DialogPrimitive.Close
+const SheetPortal = DialogPrimitive.Portal
 
 const SheetContent = React.forwardRef(({ className, children, ...props }, ref) => (
   <SheetPortal>
-    <SheetPrimitive.Content
+    <DialogPrimitive.Content
       ref={ref}
       className="fixed z-50 gap-4 bg-gray-800/95 p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm"
       {...props}
     >
       {children}
-    </SheetPrimitive.Content>
+    </DialogPrimitive.Content>
   </SheetPortal>
 ))
-SheetContent.displayName = SheetPrimitive.Content.displayName
+SheetContent.displayName = DialogPrimitive.Content.displayName
 
 const SheetHeader = ({
   className,
@@ -33,13 +33,13 @@ const SheetHeader = ({
 SheetHeader.displayName = "SheetHeader"
 
 const SheetTitle = React.forwardRef(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title
+  <DialogPrimitive.Title
     ref={ref}
     className="text-lg font-semibold text-white"
     {...props}
   />
 ))
-SheetTitle.displayName = SheetPrimitive.Title.displayName
+SheetTitle.displayName = DialogPrimitive.Title.displayName
 
 export {
   Sheet,
