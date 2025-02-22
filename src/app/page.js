@@ -15,12 +15,13 @@ const ADMIN_KEYS = ['Control', 'Alt', 'M']; // Yeni kısayol kombinasyonu
 
 const EventTimer = () => {
   const [referenceTime, setReferenceTime] = useState(() => {
-    const saved = localStorage.getItem('referenceTime');
+    // Tarayıcıda localStorage'tan veri al, yoksa varsayılan değer kullan
+    const saved = typeof window !== "undefined" ? localStorage.getItem('referenceTime') : null;
     if (saved) {
       return new Date(saved);
     }
     const initialTime = new Date();
-    initialTime.setHours(16, 15, 30);
+    initialTime.setHours(16, 15, 30); // Varsayılan başlangıç saati
     return initialTime;
   });
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -32,14 +33,14 @@ const EventTimer = () => {
   const [showNotificationHint, setShowNotificationHint] = useState(true);
   const [pressedKeys, setPressedKeys] = useState(new Set());
   const audioRef = useRef(null);
-  
+
   const EVENT_DURATION = 21 * 60 * 1000; // 21 dakika
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       const newPressedKeys = new Set([...pressedKeys, e.key]);
       setPressedKeys(newPressedKeys);
-      
+
       // Ctrl+Alt+M kontrolü
       if (ADMIN_KEYS.every(key => {
         const keyMap = {
@@ -84,7 +85,10 @@ const EventTimer = () => {
 
   useEffect(() => {
     if (referenceTime) {
-      localStorage.setItem('referenceTime', referenceTime.toISOString());
+      // referenceTime'ı localStorage'a kaydet
+      if (typeof window !== "undefined") {
+        localStorage.setItem('referenceTime', referenceTime.toISOString());
+      }
     }
   }, [referenceTime]);
 
